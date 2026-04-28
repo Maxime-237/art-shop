@@ -8,26 +8,32 @@ class Oeuvre extends Model
 {
     protected $fillable = [
         'user_id',
-        'category_id',
+        'categorie_id',
         'titre',
         'slug',
         'description',
         'price',
         'stock',
         'statut',
-        'image'
+        'image',
+        'vues'
     ];
 
-    public function Artiste() {
+    public function artiste() {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function Category() {
+    public function categorie() {
         return $this->belongsTo(Categorie::class);
     }
 
-    // public function images() {
-    //     return $this->hasMany(Oeuvre_image::class);
-    // }
+    public function images() {
+        return $this->hasMany(OeuvreImage::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 
     public function Commande() {
         return $this->hasMany(Commande::class);
@@ -35,5 +41,11 @@ class Oeuvre extends Model
 
     public function CommandeItem() {
         return $this->hasMany(CommandeItem::class);
+    }
+
+    // Accesseur note moyenne
+    public function getNotemoyenne(): float
+    {
+        return $this->reviews()->avg('note') ?? 0;
     }
 }

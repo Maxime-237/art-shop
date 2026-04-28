@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('commande_id')->constrained()->onDelete('cascade');
             $table->foreignId('oeuvre_id')->constrained()->onDelete('cascade');
             $table->integer('quantite')->default(1);
-            $table->decimal('price_unit', 10, 2);
+            $table->decimal('prix_unitaire', 10, 2);
             $table->timestamps();
         });
     }

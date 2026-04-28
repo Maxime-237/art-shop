@@ -4,18 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CommandeItem extends Model
+class OeuvreImage extends Model
 {
     protected $fillable = [
-        'commande_id',
         'oeuvre_id',
-        'quantite',
-        'prix_unitaire'
+        'chemin'
     ];
-
-    public function commande() {
-        return $this->belongsTo(Commande::class);
-    }
 
     public function oeuvre() {
         return $this->belongsTo(Oeuvre::class);

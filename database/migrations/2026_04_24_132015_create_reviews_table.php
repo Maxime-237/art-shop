@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('commandes', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('oeuvre_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('total', 10, 2);
-            $table->enum('statut', ['en_attente', 'en_cours', 'payee', 'expediee', 'livree', 'terminee', 'annulee'])->default('en_attente');
-            $table->string('adresse_livraison');
+            $table->tinyInteger('note');
+            $table->text('commentaire')->nullable();
+            $table->unique(['oeuvre_id', 'user_id']);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('commandes');
+        Schema::dropIfExists('reviews');
     }
 };

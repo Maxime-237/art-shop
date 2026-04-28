@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('oeuvres', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->string('title');
+            $table->foreignId('categorie_id')->constrained()->onDelete('cascade');
+            $table->string('titre');
             $table->string('slug')->unique();
             $table->text('description');
             $table->decimal('price', 10, 2);
             $table->integer('stock')->default(1);
-            $table->string('image')->nullable();
-            $table->enum('status', ['disponible', 'vendu', 'archive'])->default('disponible');
+            $table->unsignedBigInteger('vues')->default(0);
+            $table->string('image');
+            $table->enum('statut', ['disponible', 'vendu', 'archive'])->default('disponible');
             $table->timestamps();
         });
     }

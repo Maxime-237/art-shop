@@ -22,6 +22,20 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+        'bio',
+        'avatar'
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
     protected function casts(): array
     {
         return [
@@ -30,27 +44,29 @@ class User extends Authenticatable
         ];
     }
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
-        'avatar'
-    ];
 
-    public function Oeuvre() {
+
+    public function oeuvres() {
         return $this->hasMany(Oeuvre::class);
     }
-    public function Commande() {
+    public function commandes() {
         return $this->hasMany(Commande::class);
     }
 
-    public function isAdmin() {
+    public function review() {
+        return $this->hasMany(Review::class);
+    }
+
+    public function isAdmin(): bool {
         return $this->role === 'admin';
     }
 
-    public function isArtiste() {
+    public function isArtiste(): bool {
         return $this->role === 'artiste';
+    }
+
+    public function isClient(): bool {
+        return $this->role === 'client';
     }
 
 }

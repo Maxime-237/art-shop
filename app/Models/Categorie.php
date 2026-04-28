@@ -11,7 +11,8 @@ class Categorie extends Model
         'slug',
         'description'
     ];
-    public function Oeuvres() {
+
+    public function oeuvres() {
         return $this->hasMany(Oeuvre::class);
     }
 }

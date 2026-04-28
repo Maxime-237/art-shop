@@ -8,12 +8,12 @@ class Commande extends Model
 {
     protected $fillable = [
         'user_id',
-        'quantite',
-        'total_price',
-        'status'
+        'total',
+        'statut',
+        'adresse_livraison'
     ];
 
-    public function User() {
+    public function user() {
         return $this->belongsTo(User::class);
     }
 
