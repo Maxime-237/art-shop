@@ -19,8 +19,8 @@
 
     <div class="auth-form-box">
         <div class="form-toggle">
-            <a href="{{ route('login') }}" class="active">Connexion</a>
-            <a href="{{ route('register') }}">Inscription</a>
+            <a href="{{ route('login') }}" class="active" style="text-decoration: none">Connexion</a>
+            <a href="{{ route('register') }}" style="text-decoration: none">Inscription</a>
         </div>
 
         <form method="POST" action="{{ route('login') }}" class="auth-form active-form">

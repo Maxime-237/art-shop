@@ -77,3 +77,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
+// Route page de login admin (accessible sans être connecté)
+Route::get('/admin/login', function () {
+    return view('admin.auth');
+})->name('admin.login')->middleware('guest');

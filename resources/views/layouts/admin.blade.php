@@ -25,7 +25,7 @@
                 <i class="fa-solid fa-shield-halved"></i> <span>ADMIN<span>CORE</span></span>
             </div>
             <ul class="admin-menu">
-                <li class="{{ request()->routeIs('admin.dashoard') ? 'active' : '' }}">
+                <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <a href="{{ route('admin.dashboard') }}"
                         style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:12px;width:100%;">
                         <i class="fa-solid fa-gauge"></i> Tableau de bord

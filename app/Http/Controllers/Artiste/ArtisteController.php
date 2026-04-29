@@ -18,13 +18,13 @@ class ArtisteController extends Controller
         // Code pour afficher le tableau de bord de l'artiste
 
         $user = Auth::user();
-        $oeuvres = $user->Oeuvre()->with('categorie')->latest()->get();
+        $oeuvres = $user->Oeuvres()->with('categorie')->latest()->get();
         $stats = [
-            'ventes_totales' => $user->oeuvre()
+            'ventes_totales' => $user->oeuvres()
                 ->join('commande_items', 'oeuvres.id', '=', 'commande_items.oeuvre_id')
                 ->sum('commande_items.prix_unitaire'),
 
-            'vues' => $user->Oeuvre()->sum('vues'),
+            'vues' => $user->Oeuvres()->sum('vues'),
             'oeuvres' => $oeuvres->count(),
         ];
 
@@ -106,7 +106,7 @@ class ArtisteController extends Controller
         abort_if($oeuvre->user_id !== Auth::id(), 403);
 
         Storage::disk('public')->delete($oeuvre->image);
-        $oeuvre->delete();
+        $oeuvre->delete($oeuvre);
 
         return redirect()->route('artiste.dashboard')->with('success', 'Œuvre supprimée avec succès ! 🗑️');
     }

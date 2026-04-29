@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div style="padding:30px;">
+    <div style="padding:30px; margin-top: 2vh;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
 
             <h2 style="font-size:1.4rem;font-weight:700;">
@@ -61,7 +61,7 @@
                                             </span>
                                         </td>
                                         <td style="font-weight:600;color:var(--admin-accent);">
-                                            {{ number_format($artwork->prix, 0, ',', ' ') }} FCFA
+                                            {{ number_format($artwork->price, 0, ',', ' ') }} FCFA
                                         </td>
                                         <td style="text-align:center;color:#64748b;">
                                             <i class="fa-solid fa-eye" style="font-size:0.75rem;"></i>
