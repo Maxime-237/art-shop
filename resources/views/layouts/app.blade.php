@@ -103,7 +103,47 @@
 
             </div>
         </div>
+
+        {{-- HAMBURGER --}}
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
+
+    {{-- MENU MOBILE --}}
+
+    <div class="mobile-menu" id="mobileMenu">
+
+        <a href="{{ route('home') }}">Accueil <span class="arrow">›</span></a>
+        <a href="{{ route('oeuvres.index') }}">Boutique <span class="arrow">›</span></a>
+        <a href="#blog">Blog Culturel <span class="arrow">›</span></a>
+        <a href="#artists">Artistes <span class="arrow">›</span></a>
+
+        @auth
+            <a href="{{ route('commande.index') }}">Mes commandes <span class="arrow">›</span></a>
+            @if(auth()->user()->isArtiste())
+                <a href="{{ route('artiste.dashboard') }}">Mon Studio <span class="arrow">›</span></a>
+            @endif
+            @if(auth()->user()->isAdmin())
+                <a href="{{ route('admin.dashboard') }}">Administration <span class="arrow">›</span></a>
+            @endif
+            <div class="mobile-menu-footer">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" style="background:none;border:none;color:#e53e3e;font-size:1rem;cursor:pointer;">
+                        Déconnexion
+                    </button>
+                </form>
+            </div>
+        @else
+            <div class="mobile-menu-footer">
+                <a href="{{ route('login') }}">Connexion</a>
+                <a href="{{ route('register') }}">Inscription</a>
+            </div>
+        @endauth
+    </div>
 
     {{-- Messages flash --}}
 
@@ -163,14 +203,14 @@
 
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-logo"><span>ART</span>SHOP</div>
+        <div class="footer-content" style="text-align:center; padding: 40px 0;">
+            <div class="footer-logo" style="font-weight: 800"><span style="color: var(--accent)">ART</span>SHOP</div>
             <p>Promouvoir l'excellence artistique du Cameroun à l'échelle mondiale.</p>
         </div>
 
         <hr>
 
-        <p class="copy">&copy; {{ date('Y') }} Cameroon Art Marketplace. Tous droits
+        <p class="copy" style="text-align:center; padding: 20px 0;">&copy; {{ date('Y') }} Cameroon Art Marketplace. Tous droits
             réservés.</p>
     </footer>
 

@@ -33,7 +33,7 @@ class AdminOeuvreController extends Controller
         public function destroy(Oeuvre $oeuvre) {
             // Code pour supprimer une œuvre
 
-            $oeuvre->delete();
+            $oeuvre->delete($oeuvre);
             return redirect()->route('admin.oeuvres.index')->with('success', 'Œuvre supprimée !');
         }
 }

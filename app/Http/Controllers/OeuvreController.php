@@ -56,7 +56,8 @@ class OeuvreController extends Controller
                 ->firstOrFail();
 
         // Incrémenter le nombre de vues
-        $oeuvre->increment('vues');
+        $oeuvre->vues = $oeuvre->vues + 1;
+        $oeuvre->save();
 
         //Recherche des oeuvres similaires
         $similaires = Oeuvre::with(['artiste', 'categorie'])

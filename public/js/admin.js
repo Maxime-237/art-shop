@@ -9,6 +9,37 @@ document.addEventListener('DOMContentLoaded', () => {
     loadActivity();
 });
 
+// Toggle Sidebar pour Hamburger Menu
+function toggleSidebar() {
+    const btn = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('adminSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if(btn && sidebar) {
+        btn.classList.toggle('open');
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+
+        // Bloquer le scroll body quand menu ouvert
+        document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+    }
+}
+
+// Fermer sidebar si on tourne l'écran en paysage
+window.addEventListener('resize', () => {
+    const btn = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('adminSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if(btn && sidebar) {
+        btn.classList.remove('open');
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+});
+
+
 function loadActivity() {
     const tbody = document.getElementById('activity-log');
     if(!tbody) return;

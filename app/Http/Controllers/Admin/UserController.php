@@ -30,7 +30,7 @@ class UserController extends Controller
 
         abort_if($user->isAdmin(), 403, 'Vous ne pouvez pas supprimer un administrateur.');
 
-        $user->delete();
+        $user->delete($user);
         return redirect()->route('admin.users.index')->with('success', 'Utilisateur supprimé avec succès !');
     }
 }

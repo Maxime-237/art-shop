@@ -11,19 +11,34 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
     @stack('styles')
 </head>
 
 <body>
 
+    {{-- HAMBURGER BUTTON --}}
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    {{-- OVERLAY --}}
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
     <div class="admin-container">
 
         {{-- SIDEBAR --}}
 
-        <nav class="admin-sidebar">
-            <div class="sidebar-brand">
-                <i class="fa-solid fa-shield-halved"></i> <span>ADMIN<span>CORE</span></span>
+        <nav class="admin-sidebar" id="adminSidebar">
+            <div class="top">
+                <div class="sidebar-brand">
+                    <i class="fa-solid fa-shield-halved"></i> <span>ADMIN<span>CORE</span></span>
+                </div>
+
             </div>
+
             <ul class="admin-menu">
                 <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <a href="{{ route('admin.dashboard') }}"
@@ -33,32 +48,38 @@
                 </li>
 
                 <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.users.index') }}" style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:12px;width:100%;">
-                         <i class="fa-solid fa-users-gear"></i> Utilisateurs
+                    <a href="{{ route('admin.users.index') }}"
+                        style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:12px;width:100%;">
+                        <i class="fa-solid fa-users-gear"></i> Utilisateurs
                     </a>
                 </li>
 
                 <li class="{{ request()->routeIs('admin.oeuvres.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.oeuvres.index') }}" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; width: 100%;">
+                    <a href="{{ route('admin.oeuvres.index') }}"
+                        style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; width: 100%;">
                         <i class="fa-solid fa-box-open"></i> Catalogue Produits
                     </a>
 
                 </li>
 
                 <li>
-                    <a href="#" style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:12px;width:100%;">
+                    <a href="#"
+                        style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:12px;width:100%;">
                         <i class="fa-solid fa-money-bill-trend-up"></i> Finances
                     </a>
                 </li>
             </ul>
 
-            <div class="sidebar-bottom">
-                <a href="{{ route('home') }}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Retour au site</a>
+            <div class="sidebar-bottom" style="margin-bottom: 12px">
+                <a href="{{ route('home') }}" text-decoration:none;color:inherit;font-size:
+                    1.1rem;display:flex;align-items:center;gap:12px;width:100%;><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i> Retour au site</a>
 
                 <form action="{{ route('logout') }}" method="POST" style="margin-top: 10px;">
                     @csrf
 
-                    <button type="submit" style="background: none; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
+                    <button type="submit"
+                        style="background: none; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;color: #e58e26;width:100%;border:none">
                         <i class="fa-solid fa-power-off"></i> Déconnexion
                     </button>
                 </form>
@@ -77,7 +98,8 @@
                 <div class="admin-profile">
                     <span class="status-indicator"></span>
                     <p>{{ auth()->user()->name }}</p>
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=e58e26&color=fff" alt="Admin">
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=e58e26&color=fff"
+                        alt="Admin">
                 </div>
             </header>
 

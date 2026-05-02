@@ -1,4 +1,4 @@
-{{--  Studio artiste + modal publication --}}
+{{-- Studio artiste + modal publication --}}
 
 @extends('layouts.artiste')
 
@@ -6,101 +6,100 @@
 
 @section('content')
 
-    <header class="top-bar">
-        <h2>Bienvenu, <span id="artist-name">{{ auth()->user()->name }}</span></h2>
-        <div class="top-bar-actions">
-            <button class="btn-upload" onclick="openUploadModal()">
-                <i class="fa-solid fa-plus"></i> Publier une œuvre
-            </button>
-
+    <header class="admin-header">
+        <div class="search-box">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Rechercher une œuvre, un ID...">
+        </div>
+        <div class="admin-profile">
+            <span class="status-indicator"></span>
+            <p>{{ auth()->user()->name }}</p>
             <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=e58e26&color=fff"
-                alt="profile" class="avatar-sm">
+                alt="Artiste">
         </div>
     </header>
 
-    {{-- Stats --}}
+    {{-- KPI Cards --}}
 
-    <section class="stats-grid">
-        <div class="stat-card">
-            <i class="fa-solid fa-money-bill"></i>
-            <div>
-                <h3>{{ number_format($stats['ventes_totales'], 0, ',', ' ') }}</h3>
-                <p>Ventes totales (FCFA)</p>
+    <section class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-info">
+                <p>Ventes totales</p>
+                <h3>{{ number_format($stats['ventes_totales'], 0, ',', ' ') }} FCA</h3>
             </div>
+            <i class="fa-solid fa-money-bill color-1"></i>
         </div>
-        <div class="stat-card">
-            <i class="fa-solid fa-eye"></i>
-            <div>
-                <h3>{{ number_format($stats['vues']) }}</h3>
+        <div class="kpi-card">
+            <div class="kpi-info">
                 <p>Vues du profil</p>
+                <h3>{{ number_format($stats['vues']) }}</h3>
             </div>
+            <i class="fa-solid fa-eye color-2"></i>
         </div>
-        <div class="stat-card">
-            <i class="fa-solid fa-users"></i>
-            <div>
+        <div class="kpi-card">
+            <div class="kpi-info">
+                <p>Œuvres publiées</p>
                 <h3>{{ $stats['oeuvres'] }}</h3>
-                <p>Oeuvres publiées</p>
             </div>
+            <i class="fa-solid fa-images color-3"></i>
         </div>
     </section>
 
     {{-- Portfolio --}}
 
-    <div id="dynamic-area">
-        <section class="content-section">
-            <div class="section-header">
-                <h3>Mes Œuvres Récentes</h3>
-            </div>
-            <div class="portfolio-grid" >
+    <div class="table-container">
+        <div class="table-header">
+            <h3>Mes Œuvres Récentes</h3>
+            <button class="btn-upload" onclick="openUploadModal()">
+                <i class="fa-solid fa-plus"></i> Publier
+            </button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Prix</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
                 @forelse ($oeuvres as $oeuvre)
-
-                    <div work-item style="position:relative;">
-                        <img src="{{ $oeuvre->image }}" alt="{{ $oeuvre->titre }}">
-
-                        <div class="work-overlay">
-                            <div class="work-actions">
-
-                                <a href="{{ route('artiste.oeuvres.edit', $oeuvre) }}"
-                                    style="background:white;border:none;padding:8px 10px;border-radius:5px;cursor:pointer;text-decoration:none;color:inherit;">
-                                    <i class="fa-solid fa-pen"></i>
-                                </a>
-
-                                <form action="{{ route('artiste.oeuvres.destroy', $oeuvre) }}" method="POST"
-                                    onsubmit="return confirm('supprimer cette oeuvre ?')">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit"
-                                        style="background:white;border:none;padding:8px 10px;border-radius:5px;cursor:pointer;color:#dc3545;">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div style="padding:10px;font-size:0.9rem;">
-                            <p><strong>{{ $oeuvre->titre }}</strong></p>
-                            <small>{{ number_format($oeuvre->price, 0, ',', ' ') }} FCFA</small>
-                            <span style="margin-left:10px;padding:2px 8px;border-radius:10px;font-size:0.75rem;
-                                                background: {{ $oeuvre->statut == 'disponible' ? '#d4edda' : '#f8d7da' }};
-                                                color: {{  $oeuvre->statut === 'disponible' ? '#155724' : '#721c24' }}">
-
-                                {{ $oeuvre->statut }}
-                            </span>
-                        </div>
-                    </div>
-
+                    <tr>
+                        <td><img src="{{ $oeuvre->image_url }}" alt="{{ $oeuvre->titre }}"
+                                style="width:60px;height:60px;object-fit:cover;border-radius:8px;"></td>
+                        <td><strong>{{ $oeuvre->titre }}</strong></td>
+                        <td>{{ number_format($oeuvre->price, 0, ',', ' ') }} FCA</td>
+                        <td><span
+                                class="status-tag {{ $oeuvre->statut == 'disponible' ? 'active' : 'pending' }}">{{ $oeuvre->statut }}</span>
+                        </td>
+                        <td>
+                            <a href="{{ route('artiste.oeuvres.edit', $oeuvre) }}"
+                                style="color:var(--admin-primary);margin-right:10px;">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <form action="{{ route('artiste.oeuvres.destroy', $oeuvre) }}" method="POST" style="display:inline;"
+                                onsubmit="return confirm('supprimer cette oeuvre ?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" style="background:none;border:none;cursor:pointer;color:#ef4444;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
                 @empty
-
-                    <div style="grid-column:1/-1;text-align:center;padding:50px;color:#999;">
-                        <i class="fa-solid fa-palette"
-                            style="font-size: 3rem; display: block; margin-bottom: 15px; opacity: 0.3;"></i>
-                        <p>Vous n'avez pas encr publier d'ouvres.</p>
-                    </div>
-
+                    <tr>
+                        <td colspan="5" style="text-align:center;padding:50px;color:#999;">
+                            <i class="fa-solid fa-palette"
+                                style="font-size:2rem;margin-bottom:10px;display:block;opacity:0.3;"></i>
+                            <p>Vous n'avez pas encore publié d'œuvres.</p>
+                        </td>
+                    </tr>
                 @endforelse
-            </div>
-        </section>
+            </tbody>
+        </table>
     </div>
 
     {{-- Modal Publication --}}
@@ -128,12 +127,12 @@
                 </div>
                 <input type="text" name="titre" placeholder="Titre de l'œuvre" required value="{{ old('titre') }}">
                 <textarea name="description" placeholder="Histoire derrière cette œuvre..." required>{{ old('description') }}
-                </textarea>
+                    </textarea>
                 <div class="input-row">
                     <input type="number" name="price" placeholder="Prix (FCFA) *" required min="0"
-                        value="{{ old('price') }}"
-                    >
-                    <input type="number" name="stock" placeholder="combien en stock ?" value="{{ old('stock') }}" min="1" required>
+                        value="{{ old('price') }}">
+                    <input type="number" name="stock" placeholder="combien en stock ?" value="{{ old('stock') }}" min="1"
+                        required>
                     <select name="categorie_id" required>
                         <option value="">-- Categorie --</option>
                         @foreach($categories as $category)

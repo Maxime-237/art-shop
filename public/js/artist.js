@@ -10,6 +10,35 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
 });
 
+function toggleSidebar() {
+    const btn = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('adminSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if(btn && sidebar) {
+        btn.classList.toggle('open');
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+
+        //bloquer le sroll body quand menu ouvert
+        document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+    }
+}
+
+// Handle resize
+window.addEventListener('resize', () => {
+    const btn = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('adminSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if(btn && sidebar) {
+        btn.classList.remove('open');
+        sidebar.classList.remove('open');
+        if(overlay) overlay.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+});
+
 // Charger le Portfolio
 function loadPortfolio() {
     const grid = document.getElementById('artist-works');

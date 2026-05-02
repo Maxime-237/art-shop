@@ -48,4 +48,15 @@ class Oeuvre extends Model
     {
         return $this->reviews()->avg('note') ?? 0;
     }
+
+    public function getImageUrlAttribute() : string {
+        //si l'image est une url on la retourne telle quelle
+
+        if(str_starts_with($this->image, 'http')) {
+            return $this->image;
+        }
+
+        //si c'est un fichier uploadé on ajoute storage
+        return asset('storage/' . $this->image);
+    }
 }

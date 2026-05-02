@@ -1,13 +1,19 @@
 // --- 1. DONNÉES (PRODUITS & ARTISTES) ---
-const artworks = [
-    { id: 1, title: "Masque Bamoun Bronze", artist: "Moussa F.", price: 75000, category: "Sculpture", img: '../assets/artworks/art_1.png', stars: 5, stock: 3, desc: "Véritable bronze issu des fonderies traditionnelles de Foumban." },
-    { id: 2, title: "Rêve Tropical", artist: "Sali H.", price: 120000, category: "Peinture", img: '../assets/artworks/art_2.png', stars: 4, stock: 1, desc: "Une peinture vibrante capturant l'essence des forêts du Sud." },
-    { id: 3, title: "Dynastie Grassfields", artist: "Paul N.", price: 250000, category: "Sculpture", img: '../assets/artworks/art_3.png', stars: 5, stock: 2, desc: "Sculpture sur bois précieux représentant la lignée royale." },
-    { id: 4, title: "Afro-Futurisme 237", artist: "Awa N.", price: 45000, category: "Digital Art", img: '../assets/artworks/art_4.png', stars: 4, stock: 10, desc: "Oeuvre numérique haute résolution livrée avec certificat NFT." },
-    { id: 5, title: "La joconde", artist: "Leonard de v.", price: 5000000, category: "Peinture", img: '../assets/artworks/art_5.png', stars: 5, stock: 1, desc: "Oeuvre numérique haute résolution livrée avec certificat NFT." },
-    { id: 6, title: "Illusion du Temp", artist: "Sali H.", price: 120000, category: "Peinture", img: '../assets/artworks/art_6.png', stars: 4, stock: 10, desc: "Une peinture vibrante capturant l'essence des forêts du Sud." }
-];
+// const artworks = [
+//     { id: 1, title: "Masque Bamoun Bronze", artist: "Moussa F.", price: 75000, category: "Sculpture", img: '../assets/artworks/art_1.png', stars: 5, stock: 3, desc: "Véritable bronze issu des fonderies traditionnelles de Foumban." },
+//     { id: 2, title: "Rêve Tropical", artist: "Sali H.", price: 120000, category: "Peinture", img: '../assets/artworks/art_2.png', stars: 4, stock: 1, desc: "Une peinture vibrante capturant l'essence des forêts du Sud." },
+//     { id: 3, title: "Dynastie Grassfields", artist: "Paul N.", price: 250000, category: "Sculpture", img: '../assets/artworks/art_3.png', stars: 5, stock: 2, desc: "Sculpture sur bois précieux représentant la lignée royale." },
+//     { id: 4, title: "Afro-Futurisme 237", artist: "Awa N.", price: 45000, category: "Digital Art", img: '../assets/artworks/art_4.png', stars: 4, stock: 10, desc: "Oeuvre numérique haute résolution livrée avec certificat NFT." },
+//     { id: 5, title: "La joconde", artist: "Leonard de v.", price: 5000000, category: "Peinture", img: '../assets/artworks/art_5.png', stars: 5, stock: 1, desc: "Oeuvre numérique haute résolution livrée avec certificat NFT." },
+//     { id: 6, title: "Illusion du Temp", artist: "Sali H.", price: 120000, category: "Peinture", img: '../assets/artworks/art_6.png', stars: 4, stock: 10, desc: "Une peinture vibrante capturant l'essence des forêts du Sud." }
+// ];
 
+
+// MENU MOBILE
+function toggleMenu() {
+    document.getElementById('hamburger').classList.toggle('open');
+    document.getElementById('mobileMenu').classList.toggle('open');
+}
 const artistsData = [
     { name: "Awa Ndongo", bio: "Spécialiste Digital Art", region: "Littoral", img: '../assets/artist/ava_1.png', news: "Vernissage ce week-end !" },
     { name: "Moussa F.", bio: "Maître sculpteur Bronze", region: "Ouest", img: '../assets/artist/ava_2.png', news: "3 nouvelles pièces dispo." }
@@ -92,10 +98,10 @@ function openProduct(id) {
         document.getElementById('modal-price').innerText = p.price.toLocaleString();
         document.getElementById('modal-cat').innerText = p.category;
         document.getElementById('modal-desc').innerText = p.desc;
-        
+
         const stockEl = document.getElementById('modal-stock');
         if(stockEl) stockEl.innerHTML = `<i class="fa-solid fa-boxes-stacked"></i> <span>${p.stock} pièces restantes</span>`;
-        
+
         const starsEl = document.getElementById('modal-stars');
         if(starsEl) starsEl.innerHTML = '<i class="fa-solid fa-star"></i>'.repeat(p.stars);
 
@@ -151,7 +157,7 @@ function renderCart() {
     const container = document.getElementById('cart-items-container');
     const totalEl = document.getElementById('cart-total-price');
     const subtotalEl = document.getElementById('subtotal');
-    
+
     if (!container) return;
 
     let total = 0;

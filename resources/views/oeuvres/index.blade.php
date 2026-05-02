@@ -6,6 +6,7 @@
 
 @section('content')
 
+
     <div style="padding: 60px 5%;">
         <h2 class="section-title" style="margin-bottom: 30px;">
             Catalogue des Œuvres
@@ -50,8 +51,26 @@
 
             @forelse ($oeuvres as $oeuvre)
 
-                <div class="product-cart">
-                    <img src="{{ $oeuvre->image }}" alt="{{ $oeuvre->title }}" class="product-img">
+                <div class="product-card">
+                    <div class="product-img-container">
+
+                        <img src="{{ $oeuvre->image_url }}" alt="{{ $oeuvre->titre }}" class="product-img">
+                        <div class="card-actions">
+                            <a href="{{ route('oeuvres.show', $oeuvre->slug) }}" class="btn-card btn-detail-view"
+                                onclick="openProduct({{ $oeuvre->id }}})" style="text-decoration: none">
+                                <i class="fa-solid fa-eye"></i> Détails
+                            </a>
+                            @auth
+                                <form action="{{ route('cart.add', $oeuvre) }}" method="POST">
+                                    @csrf
+
+                                    <button class="btn-card btn-quick-add" title="Ajouter au panier" type="submit">
+                                        <i class="fa-solid fa-bag-shopping"></i> + Panier
+                                    </button>
+                                </form>
+                            @endauth
+                        </div>
+                    </div>
 
                     <div class="product-info">
 
@@ -60,7 +79,7 @@
                         <p>Par {{ $oeuvre->artiste->name }}</p>
                         <div class="price">{{ number_format($oeuvre->price, 0, ',', ' ') }} FCFA</div>
 
-                        <div style="display: flex; gap: 10px; margin-top: 12px;">
+                        {{-- <div style="display: flex; gap: 10px; margin-top: 12px;">
                             <a href="{{ route('oeuvres.show', $oeuvre->slug) }}" class="btn-primary"
                                 style="flex: 1; text-align: center; padding: 8px;"
                             >
@@ -76,7 +95,7 @@
                                     </button>
                                 </form>
                             @endauth
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
