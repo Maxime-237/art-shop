@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: art-shop
+    env: php
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php artisan config:cache
+      php artisan route:cache
+      php artisan view:cache
+      php artisan migrate --force
+      php artisan db:seed --force
+      php artisan storage:link
+    startCommand: php -S 0.0.0.0:$PORT -t public/ server.php
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
