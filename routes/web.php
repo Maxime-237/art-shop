@@ -81,3 +81,21 @@ Route::middleware('auth')->group(function () {
 Route::get('/admin/login', function () {
     return view('admin.auth');
 })->name('admin.login')->middleware('guest');
+
+// Route temporaire pour créer l'admin - À SUPPRIMER APRÈS !
+Route::get('/setup-admin', function () {
+    $user = App\Models\User::where('email', 'admin@camerart.cm')->first();
+
+    if ($user) {
+        return 'Admin existe déjà ! Email: admin@camerart.cm';
+    }
+
+    App\Models\User::create([
+        'name'     => 'Super Admin',
+        'email'    => 'admin@camerart.cm',
+        'password' => bcrypt('admin123'),
+        'role'     => 'admin',
+    ]);
+
+    return 'Admin créé avec succès ! Email: admin@camerart.cm / MDP: admin123';
+});
