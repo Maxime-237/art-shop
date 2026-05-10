@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('stock')->default(1);
             $table->unsignedBigInteger('vues')->default(0);
             $table->string('image');
-            $table->enum('statut', ['disponible', 'vendu', 'archive'])->default('disponible');
+            $table->string('statut')->default('disponible');
             $table->timestamps();
         });
     }

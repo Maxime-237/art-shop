@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->decimal('total', 10, 2);
-            $table->enum('statut', ['en_attente', 'en_cours', 'payee', 'expediee', 'livree', 'terminee', 'annulee'])->default('en_attente');
+            $table->string('statut')->default('en_attente');
             $table->string('adresse_livraison');
             $table->timestamps();
         });
