@@ -4,10 +4,11 @@ $uri = urldecode(
     parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
 );
 
-if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
+// Servir les fichiers statiques directement
+if ($uri !== '/' && file_exists(__DIR__ . '/public' . $uri)) {
     return false;
 }
 
-$_SERVER['SCRIPT_FILENAME'] = __DIR__.'/public/index.php';
+$_SERVER['SCRIPT_FILENAME'] = __DIR__ . '/public/index.php';
 
-require_once __DIR__.'/public/index.php';
+require_once __DIR__ . '/public/index.php';
