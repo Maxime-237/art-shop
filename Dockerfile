@@ -25,10 +25,11 @@ RUN chmod -R 775 storage bootstrap/cache
 EXPOSE 10000
 
 # Démarrer
-CMD php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache && \
+CMD php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan route:clear && \
+    php artisan view:clear && \
     php artisan migrate --force && \
-    
+
     php artisan storage:link && \
     php -S 0.0.0.0:10000 -t public/ server.php
