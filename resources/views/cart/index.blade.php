@@ -1,4 +1,4 @@
-{{--  Panier + formulaire commande --}}
+{{-- Panier + formulaire commande --}}
 
 @extends('layouts.app')
 
@@ -6,8 +6,8 @@
 
 @section('content')
 
-    <div style="padding:60px 5%;max-width:1100px;margin:0 auto;">
-        <h2 style="font-family:'Playfair Display',serif;margin-bottom:40px;">
+    <div class="cart-page">
+        <h2 class="cart-title">
             <i class="fa-solid fa-bag-shopping"></i>
             Mon Panier
         </h2>
@@ -24,7 +24,7 @@
             </div>
         @else
 
-            <div style="display:grid;grid-template-columns:1fr 350px;gap:40px;align-items:start;">
+            <div class="cart-layout">
 
                 {{-- Liste articles --}}
                 <div>
@@ -72,8 +72,7 @@
                 </div>
 
                 {{-- Résumé & Commande --}}
-                <div
-                    style="background:white;padding:30px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.08);position:sticky;top:90px;">
+                <div class="cart-summary">
                     <h3 style="margin-bottom:25px;font-family:'Playfair Display',serif;">Résumé</h3>
 
                     @foreach($panier as $item)
@@ -108,6 +107,91 @@
         @endif
     </div>
 
-
-
 @endsection
+
+@push('styles')
+    <style>
+        /* Cart page responsive */
+        .cart-page {
+            padding: 60px 5%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .cart-title {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 40px;
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .cart-summary {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 90px;
+        }
+
+        /* item row adjustments */
+        .cart-item-row {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .cart-item-img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex: 0 0 auto;
+        }
+
+        .cart-item-title {
+            margin-bottom: 4px;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        @media (max-width: 900px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .cart-summary {
+                position: static;
+                top: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cart-page {
+                padding: 40px 6%;
+            }
+
+            .cart-item-row {
+                gap: 14px;
+                padding: 16px;
+            }
+
+            .cart-item-img {
+                width: 70px;
+                height: 70px;
+                border-radius: 9px;
+            }
+        }
+    </style>
+@endpush
