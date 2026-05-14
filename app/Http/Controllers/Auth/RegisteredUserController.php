@@ -51,6 +51,16 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if ($user->isArtiste()) {
+            return redirect()->route('artiste.dashboard');
+        }
+
+        return redirect()->route('home');
     }
 }
