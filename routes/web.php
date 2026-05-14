@@ -43,7 +43,7 @@ Route::middleware(['auth'])->prefix('artiste')->name('artiste.')->group(function
     })->name('dashboard');
 
     Route::post('/oeuvres', function (\Illuminate\Http\Request $request) {
-        if (!Auth::user()->isArtiste()) abort(403); // ← ! ajouté
+        if (!Auth::user()->isArtiste()) abort(403); 
         return app(ArtisteController::class)->store($request);
     })->name('oeuvres.store');
 
@@ -80,12 +80,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     Route::put('/users/{user}/role', function (\Illuminate\Http\Request $request, $user) {
         if (!Auth::user()->isAdmin()) abort(403);
-        return app(UserController::class)->updateRole($request, $user);
+        $userModel = \App\Models\User::findOrFail($user);
+        return app(UserController::class)->updateRole($request, $userModel);
     })->name('users.role');
 
     Route::delete('/users/{user}', function ($user) {
-        if (!Auth::user()->isAdmin()) abort(403); // ← ! ajouté
-        return app(UserController::class)->destroy($user);
+        if (!Auth::user()->isAdmin()) abort(403);
+        $userModel = \App\Models\User::findOrFail($user);
+        return app(UserController::class)->destroy($userModel);
     })->name('users.destroy');
 
     Route::get('/oeuvres', function () {
