@@ -9,6 +9,7 @@ use App\Http\Controllers\Artiste\ArtisteController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminOeuvreController;
 use App\Http\Controllers\Admin\UserController;
+use App\Models\Oeuvre;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -48,17 +49,20 @@ Route::middleware(['auth'])->prefix('artiste')->name('artiste.')->group(function
 
     Route::get('/oeuvres/{oeuvre}/edit', function ($oeuvre) {
         if (!Auth::user()->isArtiste()) abort(403);
-        return app(ArtisteController::class)->edit($oeuvre);
+        $oeuvreModel = Oeuvre::findOrFail($oeuvre);
+        return app(ArtisteController::class)->edit($oeuvreModel);
     })->name('oeuvres.edit');
 
     Route::put('/oeuvres/{oeuvre}', function (\Illuminate\Http\Request $request, $oeuvre) {
         if (!Auth::user()->isArtiste()) abort(403);
-        return app(ArtisteController::class)->update($request, $oeuvre);
+        $oeuvreModel = Oeuvre::findOrFail($oeuvre);
+        return app(ArtisteController::class)->update($request, $oeuvreModel);
     })->name('oeuvres.update');
 
     Route::delete('/oeuvres/{oeuvre}', function ($oeuvre) {
         if (!Auth::user()->isArtiste()) abort(403);
-        return app(ArtisteController::class)->destroy($oeuvre);
+        $oeuvreModel = Oeuvre::findOrFail($oeuvre);
+        return app(ArtisteController::class)->destroy($oeuvreModel);
     })->name('oeuvres.destroy');
 });
 
@@ -90,13 +94,15 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     })->name('oeuvres.index');
 
     Route::put('/oeuvres/{oeuvre}/statut', function (\Illuminate\Http\Request $request, $oeuvre) {
-        if (!Auth::user()->isAdmin()) abort(403); // ← user() corrigé
-        return app(AdminOeuvreController::class)->updateStatut($request, $oeuvre);
+        if (!Auth::user()->isAdmin()) abort(403);
+        $oeuvreModel = Oeuvre::findOrFail($oeuvre);
+        return app(AdminOeuvreController::class)->updateStatut($request, $oeuvreModel);
     })->name('oeuvres.statut');
 
     Route::delete('/oeuvres/{oeuvre}', function ($oeuvre) {
         if (!Auth::user()->isAdmin()) abort(403);
-        return app(AdminOeuvreController::class)->destroy($oeuvre);
+        $oeuvreModel = Oeuvre::findOrFail($oeuvre);
+        return app(AdminOeuvreController::class)->destroy($oeuvreModel);
     })->name('oeuvres.destroy');
 });
 
